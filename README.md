@@ -12,7 +12,7 @@ PORT   STATE SERVICE
 
 └─# dirsearch -u "http://cypher.htb" -t 50
 
-[11:35:00] Starting:                                                                                                
+**[11:35:00] Starting:                                                                                                
 [11:35:10] 200 -    5KB - /about                                            
 [11:35:10] 200 -    5KB - /about.html                                       
 [11:35:25] 307 -    0B  - /api  ->  /api/docs                               
@@ -87,7 +87,7 @@ PORT   STATE SERVICE
 [11:35:37] 404 -   22B  - /demoadmin                                        
 [11:35:53] 200 -    4KB - /login                                            
 [11:35:53] 200 -    4KB - /login.html                                       
-[11:36:29] 301 -  178B  - /testing  ->  http://cypher.htb/testing/ 
+[11:36:29] 301 -  178B  - /testing  ->  http://cypher.htb/testing/ **
 
 Find http://cypher.htb/testing/ 
 
@@ -167,25 +167,27 @@ var
 Go home
 
 neo4j@cypher:/$ cd /home
+
 cd /home
+
 neo4j@cypher:/home$ ls
-ls
+
 graphasm
+
 neo4j@cypher:/home$ cd graphasm
-cd graphasm
+
 neo4j@cypher:/home/graphasm$ ls
-ls
 bbot_preset.yml
 user.txt
+
 neo4j@cypher:/home/graphasm$ cat user.txt
-cat user.txt
 cat: user.txt: Permission denied
 
 hmm ok this is medium machine you know haha
 but ..
 
 neo4j@cypher:/home/graphasm$ ls -la                  
-ls -la
+
 total 36
 drwxr-xr-x 4 graphasm graphasm 4096 Feb 17 12:40 .
 drwxr-xr-x 3 root     root     4096 Oct  8 17:58 ..
@@ -199,7 +201,6 @@ drwx------ 2 graphasm graphasm 4096 Oct  8 17:58 .ssh
 -rw-r----- 1 root     graphasm   33 Mar 31 04:09 user.txt
 
 neo4j@cypher:/home/graphasm$ cat bbot_preset.yml
-cat bbot_preset.yml
 targets:
   - ecorp.htb
 
@@ -224,6 +225,7 @@ And
 let'sgo
 graphasm@cypher:~$ ls
 bbot_preset.yml  user.txt
+
 graphasm@cypher:~$ cat user.txt 
 XXXXXXXXXXXXXXXXXXXXXXXXXXX
 
